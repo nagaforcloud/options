@@ -1,398 +1,284 @@
 # Options Wheel Strategy Trading Bot
 
-## Project Overview
+## 🛡️ Overview
 
-The Options Wheel Strategy Trading Bot is a comprehensive solution for implementing the "Options Wheel Strategy" for the Indian stock market using Zerodha's KiteConnect API. This is a sophisticated income-generating strategy that involves selling out-of-the-money (OTM) options to collect premiums.
+The **Options Wheel Strategy Trading Bot** is a comprehensive solution for implementing the "Options Wheel Strategy" for the Indian stock market using Zerodha's KiteConnect API. This sophisticated income-generating strategy involves selling out-of-the-money (OTM) options to collect premiums while maintaining strict safety, compliance, and risk management controls.
 
-## 🛡️ Core Strategy Description
+## 🚀 Key Features
 
-The Options Wheel Strategy works as follows:
-1. When not holding the underlying stock, sell OTM Cash-Secured Puts with deltas between 0.15-0.25
-2. If assigned (stock delivered), sell OTM Covered Calls on the holdings
-3. Manage existing positions with profit targets (typically 50% of premium) and stop-losses (typically 100% of premium)
-4. Continuously run during market hours to maximize premium collection
+### 🔐 Safety & Compliance
+- **Dry Run Mode**: Add `DRY_RUN=true/false` to `.env`. When enabled, logs all orders but never places real trades. Clearly indicates `[DRY RUN]` in logs and dashboard.
+- **Live Trading Confirmation**: On first execution in live mode (`DRY_RUN=false`), prompt user: `⚠️ LIVE TRADING MODE ENABLED. Type 'CONFIRM' to proceed:`. Abort if input ≠ 'CONFIRM'.
+- **Kill Switch**: Check for existence of a file (e.g., `STOP_TRADING`) in the root directory. If present, gracefully shut down the strategy loop.
+- **Holiday Calendar Integration**: Use `mcal` or static NSE holiday list to skip non-trading days.
+- **Timezone Enforcement**: All datetime operations use `Asia/Kolkata`.
+- **Broker Compliance Rules**: Enforce Zerodha product-type alignment.
+- **Tax & Accounting Hooks**: Track tax categories for future P&L categorization.
 
-## 🚀 Installation and Setup
+### 💰 Capital & Margin Management
+- **Real-Time Margin Monitoring**: Before placing any order, call `kite.margins()` to check available cash and utilized debits.
+- **Dynamic Position Sizing**: Risk-based sizing: `max_risk = portfolio_value * config.risk_per_trade_percent`.
+- **Minimum Cash Reserve**: Maintain minimum cash reserve (`MIN_CASH_RESERVE=10000`).
+
+### 📊 Market Data Reliability
+- **Options Chain Fallbacks**: Primary: NSE India API, Fallback: Kite instruments + OHLC data.
+- **Delta Approximation**: Estimate delta when real delta unavailable.
+
+### 🧪 Backtesting Realism
+- **Transaction Cost Modeling**: Deduct real Zerodha F&O charges per trade.
+- **Slippage & Fill Logic**: Apply slippage and only fill if historical bid/ask supports order price.
+
+### 📢 Advanced Monitoring & Alerting
+- **Multi-Channel Notifications**: Support Telegram, Slack, Email, Webhook.
+- **Critical Alerts**: Send immediate alerts for margin shortfall, daily loss limit breached.
+- **Health Endpoint**: In Streamlit dashboard, add `/health` indicator.
+
+### 🔄 Strategy Flexibility
+- **Strategy Modes**: Conservative, Balanced, Aggressive modes with different delta ranges.
+- **Auto-Rolling Logic**: Before expiry (DTE ≤ 1), auto-roll unprofitable options.
+
+### 🐳 Deployment & DevOps
+- **Docker Support**: Dockerfile and docker-compose.yml with volume mounts.
+- **Process Management**: Systemd service file for production deployment.
+- **Documentation**: Alternatives to `.env` for secrets management.
+
+## 🤖 AI-Augmented Features (20 Modules) ✨
+
+1. **RAG Trade Diary & Chat** (`ai/rag/`) - Natural language querying of historical trade performance
+2. **Regime Detector** (`ai/regime/`) - Detects market regimes using FinBERT-India
+3. **Generative Stress-Test Engine** (`ai/stress/`) - Generates synthetic market scenarios
+4. **AI Slippage Predictor** (`ai/slippage/`) - Predicts order slippage using ML
+5. **Semantic Kill-Switch** (`ai/kill/`) - LLM judges Telegram messages for kill intent
+6. **News Retrieval-Augmented Filter** (`ai/news/`) - Uses newsapi.org or NSE RSS
+7. **AI Compliance Auditor** (`ai/compliance/`) - Nightly job that audits trades
+8. **Multilingual Alerting** (`ai/i18n/`) - Accept `LANGUAGE=hi,ta,gu`
+9. **Voice / WhatsApp Interface** (`ai/voice/`) - Twilio WhatsApp webhook
+10. **Synthetic Option-Chain Imputation** (`ai/synth_chain/`) - VAE trained on historic NSE chains
+11. **Explainable Greeks** (`ai/explain/`) - Streamlit widget with plain language
+12. **Auto-Hedge Suggester** (`ai/hedge/`) - LLM suggests cheapest offsetting hedge
+13. **Smart CSV Column Mapper** (`ai/mapper/`) - LLM maps brokerage CSV headers
+14. **"What-If" Scenario Chat** (`ai/whatif/`) - Streamlit chat interface
+15. **Continuous Learning Loop** (`ai/automl/`) - Nightly cron that retrains models
+16. **LLM Unit-Test Generator** (`ai/testgen/`) - Reads docstrings, generates pytest stubs
+17. **AI-Derived Kelly Position Size** (`ai/kelly/`) - Offline RL trained on mock history
+18. **Sentiment Kill-Switch** (`ai/sentiment/`) - Aggregates Twitter & Reddit sentiment
+19. **AI Code-Patch Suggester** (`ai/patch/`) - On unhandled exception, suggests patch
+20. **Memory-Efficient Embedding Cache** (`ai/cache/`) - LRU cache for embeddings
+
+## 📈 Dashboard Features
+
+### Enhanced Dashboard with Historical Trade Analysis
+- **Real-time Portfolio Overview**: Current positions and P&L metrics
+- **Multiple Tabs Structure**: Overview, Positions, Trades, Historical Trades, Performance, Risk, Controls, AI Insights, Strategy Lab
+- **Historical Trade Analysis**: Advanced analysis of historical CSV trade data
+- **Multi-File CSV Loading**: Automatically discovers and combines tradebook CSV files
+- **Advanced Filtering System**: Date range, Year, Quarter, Symbol filters
+- **Year-over-Year Analysis**: Performance comparison charts by year
+- **Quarter-over-Quarter Analysis**: Performance comparison charts by quarter
+- **Option Greeks Analysis**: Theta, Delta, Gamma proxy analysis
+- **Interactive Charts**: Cumulative performance, Daily trade volume, YoY/QoQ comparisons
+- **Data Table**: Historical trades with source file and directory information
+
+## 🛠️ Installation
 
 ### Prerequisites
-
 - Python 3.8+
-- Pip package manager
 - Zerodha Kite Connect API credentials
+- Docker (optional, for containerized deployment)
 
-### Installation Steps
-
-1. Clone the repository (if using Git):
-   ```bash
-   git clone <repository-url>
-   cd Trading
-   ```
-
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. If you want to enable AI features:
-   ```bash
-   pip install -r requirements-ai.txt
-   ```
-
-5. Copy the `.env.example` file to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-
-6. Edit the `.env` file and add your Zerodha API credentials and other settings:
-   ```bash
-   KITE_API_KEY=your_api_key_here
-   KITE_API_SECRET=your_api_secret_here
-   KITE_ACCESS_TOKEN=your_access_token_here
-   ```
-
-## ⚙️ Configuration
-
-### Environment Variables
-
-The following environment variables are available in the `.env` file:
-
-#### API Credentials
-- `KITE_API_KEY`: Your Kite API key
-- `KITE_API_SECRET`: Your Kite API secret
-- `KITE_ACCESS_TOKEN`: Your Kite access token
-
-#### Trading Parameters
-- `SYMBOL`: Trading symbol (default: TCS)
-- `QUANTITY_PER_LOT`: Number of units per lot (default: 150)
-- `PROFIT_TARGET_PERCENTAGE`: Profit target as percentage of premium (default: 0.50)
-- `LOSS_LIMIT_PERCENTAGE`: Stop loss as percentage of premium (default: 1.00)
-
-#### Delta Range
-- `OTM_DELTA_RANGE_LOW`: Lower bound for OTM delta (default: 0.15)
-- `OTM_DELTA_RANGE_HIGH`: Upper bound for OTM delta (default: 0.25)
-
-#### Open Interest
-- `MIN_OPEN_INTEREST`: Minimum open interest for option selection (default: 1000)
-
-#### Strategy Timing
-- `STRATEGY_RUN_INTERVAL_SECONDS`: Interval between strategy cycles (default: 300)
-- `MARKET_OPEN_HOUR`: Market open hour (default: 9)
-- `MARKET_OPEN_MINUTE`: Market open minute (default: 9)
-- `MARKET_CLOSE_HOUR`: Market close hour (default: 15)
-- `MARKET_CLOSE_MINUTE`: Market close minute (default: 30)
-
-#### Risk Management
-- `MAX_CONCURRENT_POSITIONS`: Maximum concurrent positions (default: 5)
-- `MAX_DAILY_LOSS_LIMIT`: Maximum daily loss limit (default: 5000.0)
-- `MAX_PORTFOLIO_RISK`: Maximum portfolio risk percentage (default: 0.02)
-
-#### Notification Settings
-- `ENABLE_NOTIFICATIONS`: Enable/disable notifications (default: false)
-- `NOTIFICATION_WEBHOOK_URL`: Webhook URL for notifications (default: "")
-- `NOTIFICATION_TYPE`: Notification type (default: "webhook")
-- `TELEGRAM_BOT_TOKEN`: Telegram bot token (default: "")
-- `TELEGRAM_CHAT_ID`: Telegram chat ID (default: "")
-
-#### Safety & Compliance Settings
-- `DRY_RUN`: Enable dry run mode (default: false)
-- `USE_HOLIDAY_CALENDAR`: Use holiday calendar (default: false)
-- `HOLIDAY_FILE_PATH`: Path to holiday file (default: ./data/nse_holidays.csv)
-- `STRATEGY_MODE`: Strategy mode (conservative, balanced, aggressive) (default: balanced)
-- `RISK_PER_TRADE_PERCENT`: Risk per trade as percentage of portfolio (default: 0.01)
-- `MIN_CASH_RESERVE`: Minimum cash reserve (default: 10000)
-- `ENABLE_AUTO_ROLL`: Enable auto-rolling logic (default: false)
-- `KILL_SWITCH_FILE`: Kill switch file name (default: STOP_TRADING)
-
-#### AI & Advanced Analytics Settings
-- `ENABLE_AI_FEATURES`: Enable AI features (default: false)
-- `AI_FEATURES`: Comma-separated list of AI features to enable (default: "rag,regime,slippage,news,stress,compliance")
-- More AI configuration options in the .env file...
-
-## 📊 Usage Examples
-
-### 1. Live Trading Mode
-
-**⚠️ WARNING: This is for educational purposes only. Trading involves significant financial risk.**
-
+### Setup
 ```bash
+# Clone the repository
+git clone https://github.com/nagaforcloud/options.git
+cd options
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+pip install -r requirements-ai.txt  # For AI features (optional)
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your Zerodha API credentials and other settings
+```
+
+### Configuration
+Edit the `.env` file with your Zerodha API credentials:
+```
+# API Credentials
+KITE_API_KEY=your_api_key_here
+KITE_API_SECRET=your_api_secret_here
+KITE_ACCESS_TOKEN=your_access_token_here
+
+# Trading Parameters
+SYMBOL=TCS
+QUANTITY_PER_LOT=150
+PROFIT_TARGET_PERCENTAGE=0.50
+LOSS_LIMIT_PERCENTAGE=1.00
+OTM_DELTA_RANGE_LOW=0.15
+OTM_DELTA_RANGE_HIGH=0.25
+MIN_OPEN_INTEREST=1000
+
+# Strategy Timing
+STRATEGY_RUN_INTERVAL_SECONDS=300
+MARKET_OPEN_HOUR=9
+MARKET_OPEN_MINUTE=9  # Changed from 15 to match actual config
+MARKET_CLOSE_HOUR=15
+MARKET_CLOSE_MINUTE=30
+
+# Risk Management
+MAX_CONCURRENT_POSITIONS=5
+MAX_DAILY_LOSS_LIMIT=5000.0
+MAX_PORTFOLIO_RISK=0.02
+
+# Notification Settings
+ENABLE_NOTIFICATIONS=false
+NOTIFICATION_WEBHOOK_URL=
+NOTIFICATION_TYPE=webhook
+
+# Data Settings
+USE_NSE_API=true
+DATA_REFRESH_INTERVAL=60
+USE_NIFTY=false
+
+# Safety & Compliance Settings
+DRY_RUN=false
+USE_HOLIDAY_CALENDAR=false
+HOLIDAY_FILE_PATH=./data/nse_holidays.csv
+STRATEGY_MODE=balanced
+RISK_PER_TRADE_PERCENT=0.01
+MIN_CASH_RESERVE=10000
+ENABLE_AUTO_ROLL=false
+KILL_SWITCH_FILE=STOP_TRADING
+
+# AI & Advanced Analytics Settings
+ENABLE_AI_FEATURES=false
+AI_FEATURES=rag,regime,slippage,news,stress,compliance
+AI_MODEL_DIR=./data/ai_models
+AI_RAG_EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+AI_LLM_MODEL=llama3:8b
+AI_LLM_BASE_URL=http://localhost:11434
+AI_LLM_TIMEOUT=30
+AI_MAX_CONTEXT_DAYS=90
+AI_CONFIDENCE_THRESHOLD=0.7
+AI_DECISION_LOGGING=false
+VECTOR_DB_PATH=./ai/data/chroma.sqlite3
+OPENAI_API_KEY=
+RAG_CONFIDENCE_THRESHOLD=0.7
+REGIME_LOOKBACK_DAYS=30
+REGIME_CONFIDENCE_THRESHOLD=0.7
+SLIPPAGE_BPS=5
+SLIPPAGE_MODEL_PATH=./ai/models/slippage_model.joblib
+SLIPPAGE_SCALER_PATH=./ai/models/slippage_scaler.joblib
+STRESS_DB_PATH=./ai/data/stress_results.db
+NEWS_VECTOR_DB_PATH=./ai/data/news_chroma.sqlite3
+COMPLIANCE_REPORTS_DIR=./compliance_reports
+ALERT_LANGUAGE=en
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=
+VOICE_MAX_REQUESTS_PER_HOUR=10
+SYNTH_CHAIN_MODEL_PATH=./ai/models/synth_chain_vae.joblib
+USE_SYNTH_CHAIN=false
+ALLOW_SYNTHETIC_STRIKES=false
+MODEL_REGISTRY_PATH=./ai/models/registry.json
+AUTO_ML_MIN_DATA=100
+AUTO_ML_AUC_THRESHOLD=0.02
+AUTO_ML_CHECK_INTERVAL_HOURS=24
+LLM_TESTS_OUTPUT_DIR=./tests/llm_generated
+KELLY_FRACTION=0.5
+KELLY_MODEL_PATH=./ai/models/kelly_model.pth
+SENTIMENT_KILL_THRESHOLD=-0.7
+SENTIMENT_VOLUME_THRESHOLD=2.0
+PATCH_ISSUE_TEMPLATE_PATH=./issue_template.md
+PATCH_SUGGESTIONS_CACHE_PATH=./ai/data/patch_suggestions.json
+EMBEDDING_CACHE_SIZE=1000
+EMBEDDING_CACHE_TTL=3600
+EMBEDDING_LRU_SIZE=100
+USE_REDIS_CACHE=false
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_DB=0
+EMBEDDING_CACHE_DB_PATH=./ai/data/embedding_cache.db
+SEMANTIC_KILL_CONFIDENCE_THRESHOLD=0.9
+CSV_MAPPING_DB_PATH=./ai/data/csv_mappings.db
+
+# Additional Settings
+INCLUDE_FEES_IN_BACKTEST=true
+```
+
+## ▶️ Usage
+
+### Live Trading Mode
+```bash
+# First-time setup - will prompt for confirmation
+python main.py --mode live
+
+# Subsequent runs
 python main.py --mode live
 ```
 
-For live trading, you'll be prompted with a confirmation message:
-```
-⚠️ LIVE TRADING MODE ENABLED. Type 'CONFIRM' to proceed:
-```
-
-### 2. Backtesting Mode
-
+### Backtesting Mode
 ```bash
+# Run backtesting
 python main.py --mode backtest --start-date 2023-01-01 --end-date 2023-03-01
 ```
 
-### 3. Dashboard Mode
-
+### Dashboard Mode
 ```bash
-python main.py --mode dashboard
-```
-
-Or directly with Streamlit:
-```bash
-cd Trading
+# Run Streamlit dashboard
 streamlit run dashboard/dashboard.py
 ```
 
-### 4. Prepare Data for Backtesting
-
+### Prepare Data for Backtesting
 ```bash
+# Prepare historical data
 python main.py --mode prepare-data
 ```
 
-## 📊 Dashboard Features
+## 🐳 Docker Deployment
 
-The dashboard provides comprehensive monitoring and analytics:
-
-- **Real-time Portfolio Overview**: Current positions and P&L metrics
-- **Performance Charts**: Equity curves and P&L analysis
-- **Risk Metrics**: Portfolio risk visualization
-- **Strategy Controls**: Start/pause/stop strategy controls
-- **Historical Trade Analysis**: Advanced analysis of historical CSV trade data
-  - Multi-file CSV loading
-  - Date range, year, quarter, and symbol filters
-  - Year-over-year and quarter-over-quarter analysis
-  - Option Greeks proxy analysis (theta, delta, gamma)
-
-## 🔒 Safety Features
-
-### 1. Dry Run Mode
-Set `DRY_RUN=true` to simulate trades without placing real orders. The system will log all orders but never place real trades.
-
-### 2. Live Trading Confirmation
-When not in dry run mode, the system prompts:
-```
-⚠️ LIVE TRADING MODE ENABLED. Type 'CONFIRM' to proceed:
-```
-
-### 3. Kill Switch
-Create a file named `STOP_TRADING` in the root directory to immediately halt the strategy execution.
-
-### 4. Risk Management
-- Daily loss limits
-- Position size limits
-- Portfolio risk limits
-- Margin utilization monitoring
-- Maximum concurrent positions
-
-## 🏛️ Indian Market Compliance
-
-- **Holiday Calendar Integration**: Use `mcal` or static NSE holiday list to skip non-trading days
-- **Timezone Enforcement**: All datetime operations use `Asia/Kolkata` timezone
-- **Broker Compliance Rules**: Enforce Zerodha product-type alignment
-- **Tax & Accounting Hooks**: Prepare for future P&L categorization
-
-## 🤖 AI-Augmented Features (20 Modules)
-
-### Available AI Features:
-1. RAG Trade Diary & Chat (`rag`)
-2. Regime Detector (`regime`) 
-3. Generative Stress-Test Engine (`stress`)
-4. AI Slippage Predictor (`slippage`)
-5. Semantic Kill-Switch (`semantic_kill`)
-6. News Retrieval-Augmented Filter (`news`)
-7. AI Compliance Auditor (`compliance`)
-8. Multilingual Alerting (`i18n`)
-9. Voice / WhatsApp Interface (`voice`)
-10. Synthetic Option-Chain Imputation (`synth_chain`)
-11. Explainable Greeks (`explain`)
-12. Auto-Hedge Suggester (`hedge`)
-13. Smart CSV Column Mapper (`mapper`)
-14. "What-If" Scenario Chat (`whatif`)
-15. Continuous Learning Loop (`automl`)
-16. LLM Unit-Test Generator (`testgen`)
-17. AI-Derived Kelly Position Size (`kelly`)
-18. Sentiment Kill-Switch (`sentiment_kill`)
-19. AI Code-Patch Suggester (`patch`)
-20. Memory-Efficient Embedding Cache (`cache`)
-
-To enable specific AI features:
+### Using Docker
 ```bash
-export AI_FEATURES=rag,regime,slippage
-python main.py
+# Build the image
+docker build -t options-wheel-bot .
+
+# Run the container
+docker run -d --env-file .env -p 8501:8501 --name options-wheel-bot options-wheel-bot
 ```
 
-## 📁 Folder Structure
-
-```
-Trading/
-├── .env                           # Environment variables and API keys
-├── requirements.txt               # Python dependencies
-├── requirements-ai.txt           # Optional AI dependencies
-├── IMPLEMENTATION_SUMMARY.md      # Documentation of components
-├── TEST_CASES.md                  # Test case specifications
-├── README.md                      # This file
-├── DEPLOYMENT.md                 # Deployment guide
-├── ENHANCEMENTS_SUMMARY.md       # Summary of safety and compliance enhancements
-├── run_tests.py                   # Test runner
-├── Dockerfile                    # Docker support
-├── docker-compose.yml            # Docker Compose configuration
-├── docker-compose.dev.yml        # Development Docker Compose override
-├── options_wheel_bot.service     # Systemd service file
-├── auto_roll_functions.py         # Auto rolling functions
-├── basic_functionality_test.py    # Basic functionality tests
-├── final_verification.py          # Final verification checks
-├── health_check.py                # Health check utilities
-├── main.py                        # Main entry point
-├── __init__.py
-├── __main__.py
-├── config/
-│   ├── __init__.py
-│   └── config.py                  # Configuration management
-├── core/
-│   ├── __init__.py
-│   └── strategy.py                # Core strategy implementation
-├── models/
-│   ├── __init__.py
-│   ├── enums.py                   # Enumerations
-│   └── models.py                  # Data models
-├── utils/
-│   ├── __init__.py
-│   └── logging_utils.py           # Logging utilities
-├── notifications/
-│   ├── __init__.py
-│   └── notification_manager.py    # Notification system
-├── database/
-│   ├── __init__.py
-│   └── database.py                # SQLite database for persistence
-├── risk_management/
-│   ├── __init__.py
-│   └── risk_manager.py            # Advanced risk controls
-├── dashboard/
-│   ├── __init__.py
-│   └── dashboard.py               # Web-based dashboard (Streamlit) with advanced analytics
-├── backtesting/
-│   ├── __init__.py
-│   ├── mock_kite.py               # Mock KiteConnect for backtesting
-│   ├── nifty_backtesting.py       # NIFTY backtesting
-│   ├── nse_data_collector.py      # NSE data collection
-│   ├── prepare_nifty_data.py      # NIFTY data preparation script
-│   └── sample_data_generator.py   # Sample data generation
-├── data/                          # Data files
-│   ├── nse_holidays.csv           # NSE holiday calendar (example)
-│   └── ...
-├── logs/                          # Log files
-├── historical_trades/             # Historical trade CSV files
-│   └── ...
-├── docs/                          # Documentation files
-├── ai/                            # AI modules (20 new features)
-│   ├── __init__.py
-│   ├── base.py                    # AI base functionality
-│   ├── rag/
-│   ├── regime/
-│   ├── slippage/
-│   ├── stress/
-│   ├── kill/
-│   ├── news/
-│   ├── compliance/
-│   ├── i18n/
-│   ├── voice/
-│   ├── synth_chain/
-│   ├── explain/
-│   ├── hedge/
-│   ├── mapper/
-│   ├── whatif/
-│   ├── automl/
-│   ├── testgen/
-│   ├── kelly/
-│   ├── sentiment/
-│   ├── patch/
-│   └── cache/
-├── prompts/                      # AI prompt templates
-└── tests/                         # Test files
-    ├── __init__.py
-    ├── test_config.py
-    ├── test_models.py
-    ├── test_strategy.py
-    ├── test_backtesting.py
-    ├── test_integration.py
-    ├── test_enhanced.py
-    ├── smoke_test.py
-    ├── test_ai_features.py        # AI feature tests
-    └── README.md
-```
-
-## 🧪 Testing
-
-### Running Tests
-
+### Using Docker Compose
 ```bash
-python -m pytest tests/
+# Start services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
 ```
 
-Or run the basic functionality tests:
+## 📚 Documentation
 
-```bash
-python basic_functionality_test.py
-```
+- [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) - Technical implementation details
+- [TEST_CASES.md](TEST_CASES.md) - Test case specifications
+- [DEPLOYMENT.md](DEPLOYMENT.md) - Deployment guide
+- [ENHANCEMENTS_SUMMARY.md](ENHANCEMENTS_SUMMARY.md) - Safety and compliance enhancements
+- [FINAL_SUMMARY.md](FINAL_SUMMARY.md) - Final project summary
 
-### Final Verification
+## ⚠️ Disclaimer
 
-Run the complete verification suite:
+This software is for educational purposes only. Trading involves significant financial risk, and you should only risk capital you can afford to lose. The authors are not responsible for any financial losses incurred through the use of this software.
 
-```bash
-python final_verification.py
-```
-
-## 🚀 Deployment
-
-### Docker Deployment
-
-1. Build the Docker image:
-   ```bash
-   docker build -t options-wheel-bot .
-   ```
-
-2. Run with Docker:
-   ```bash
-   docker run -d --env-file .env options-wheel-bot
-   ```
-
-### Docker Compose
-
-1. Start with Docker Compose:
-   ```bash
-   docker-compose up -d
-   ```
-
-### Systemd Service (Linux)
-
-Copy the systemd service file to the appropriate location:
-
-```bash
-sudo cp options_wheel_bot.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable options_wheel_bot
-sudo systemctl start options_wheel_bot
-```
-
-## ⚠️ Important Disclaimers
-
-- This is for educational purposes only - trading involves significant financial risk
-- The system should never risk more than the user can afford to lose
-- Users must understand all risks before using the system for live trading
-- Always test thoroughly in a simulated environment before live trading
-- The system should be compliant with Zerodha API terms of service
-- All safety features must be thoroughly tested before live deployment
-- Users should understand Indian market regulations and tax implications
-- AI features are experimental and for analysis only - not for autonomous trading
+Always test thoroughly in a simulated environment before using for live trading. Understand all risks associated with options trading before implementing any strategy.
 
 ## 🤝 Contributing
 
-If you'd like to contribute to the project, please fork the repository and create a pull request with your changes. Make sure to follow the existing code structure and add appropriate tests.
+Contributions are welcome! Please fork the repository and create a pull request with your changes.
 
 ## 📄 License
 
