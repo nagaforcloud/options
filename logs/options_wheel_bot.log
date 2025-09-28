@@ -1,0 +1,123 @@
+2025-09-28 00:37:22 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:38:30 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:38:48 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:38:48 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:39:18 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:39:18 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:39:18 +0530 [INFO    ] [notification_manager:__init__:41] - Notification Manager initialized
+2025-09-28 00:39:18 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 00:40:16 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:40:16 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:40:16 +0530 [INFO    ] [notification_manager:__init__:41] - Notification Manager initialized
+2025-09-28 00:40:16 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 00:41:46 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:41:46 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:41:46 +0530 [INFO    ] [notification_manager:__init__:41] - Notification Manager initialized
+2025-09-28 00:41:46 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 00:42:31 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:42:31 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:42:31 +0530 [INFO    ] [notification_manager:__init__:41] - Notification Manager initialized
+2025-09-28 00:42:31 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 00:43:37 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:43:37 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:43:37 +0530 [INFO    ] [notification_manager:__init__:41] - Notification Manager initialized
+2025-09-28 00:43:37 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 00:43:44 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:43:44 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:43:44 +0530 [INFO    ] [notification_manager:__init__:41] - Notification Manager initialized
+2025-09-28 00:43:45 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 00:43:45 +0530 [INFO    ] [basic_functionality_test:run_basic_tests:380] - Starting basic functionality tests...
+2025-09-28 00:44:29 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:44:29 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:44:30 +0530 [INFO    ] [notification_manager:__init__:41] - Notification Manager initialized
+2025-09-28 00:44:30 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 00:44:30 +0530 [INFO    ] [basic_functionality_test:run_basic_tests:380] - Starting basic functionality tests...
+2025-09-28 00:44:30 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:44:30 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:44:30 +0530 [ERROR   ] [database:get_connection:180] - Database error: Error binding parameter 27: type 'function' is not supported
+2025-09-28 00:44:30 +0530 [ERROR   ] [database:insert_position:359] - Error inserting position NIFTY23JUN18000CE: Error binding parameter 27: type 'function' is not supported
+2025-09-28 00:44:30 +0530 [INFO    ] [database:init_db:169] - Database initialized successfully
+2025-09-28 00:44:30 +0530 [INFO    ] [database:insert_trade:224] - Trade inserted successfully: TEST_ORDER_001
+2025-09-28 00:44:30 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:44:30 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 00:44:30 +0530 [INFO    ] [strategy:_initialize_kite:107] - KiteConnect initialized successfully
+2025-09-28 00:44:30 +0530 [INFO    ] [strategy:load_state:954] - No saved state found, starting fresh
+2025-09-28 00:44:35 +0530 [INFO    ] [strategy:_fetch_instruments:122] - Fetched 101641 instruments from Kite
+2025-09-28 00:44:35 +0530 [INFO    ] [strategy:__init__:88] - Option Wheel Strategy initialized successfully
+2025-09-28 00:44:35 +0530 [INFO    ] [strategy:_initialize_kite:107] - KiteConnect initialized successfully
+2025-09-28 00:44:35 +0530 [INFO    ] [strategy:load_state:954] - No saved state found, starting fresh
+2025-09-28 00:44:40 +0530 [INFO    ] [strategy:_fetch_instruments:122] - Fetched 101641 instruments from Kite
+2025-09-28 00:44:40 +0530 [INFO    ] [strategy:__init__:88] - Option Wheel Strategy initialized successfully
+2025-09-28 00:44:40 +0530 [INFO    ] [basic_functionality_test:run_basic_tests:400] - Tests run: 20
+2025-09-28 00:44:40 +0530 [INFO    ] [basic_functionality_test:run_basic_tests:401] - Failures: 2
+2025-09-28 00:44:40 +0530 [INFO    ] [basic_functionality_test:run_basic_tests:402] - Errors: 1
+2025-09-28 00:44:40 +0530 [INFO    ] [basic_functionality_test:run_basic_tests:403] - Success rate: 85.00%
+2025-09-28 01:17:15 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 01:17:15 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 01:18:57 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 01:18:57 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 01:18:57 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 01:18:57 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 01:18:57 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 01:22:30 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 01:22:30 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 01:22:30 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 01:22:30 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 01:22:30 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 01:23:42 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 02:28:25 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 02:28:25 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 02:28:25 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:28:25 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:28:25 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:28:45 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 02:28:45 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 02:28:45 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:28:45 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:28:45 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:29:29 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 02:29:29 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 02:29:29 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:29:29 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:29:29 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:29:43 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:30:13 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:30:27 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:31:45 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:31:45 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 02:31:59 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:33:37 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:39:25 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 02:39:25 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 02:40:53 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 02:40:53 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 02:40:53 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:40:53 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 02:40:53 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 03:53:17 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 03:53:17 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 03:53:17 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 03:53:17 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 03:53:17 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 03:54:41 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 03:54:41 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 03:55:57 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 03:55:57 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 03:55:57 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 03:55:57 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 03:55:57 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 17:27:37 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 17:27:38 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 17:27:38 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 17:27:38 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 17:27:38 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()
+2025-09-28 17:28:01 +0530 [INFO    ] [dashboard:load_historical_trades_from_csv:124] - Loaded 194 rows from /Users/nagashankar/pythonScripts/OWS/tradebook-ZI6046-FO.csv
+2025-09-28 17:28:01 +0530 [INFO    ] [dashboard:load_historical_trades_from_csv:124] - Loaded 49 rows from /Users/nagashankar/pythonScripts/OWS/historical_trades/tradebook-ZI6046-FO-2022.csv
+2025-09-28 17:28:01 +0530 [INFO    ] [dashboard:load_historical_trades_from_csv:124] - Loaded 194 rows from /Users/nagashankar/pythonScripts/OWS/historical_trades/tradebook-ZI6046-FO-2021.csv
+2025-09-28 17:28:01 +0530 [INFO    ] [dashboard:load_historical_trades_from_csv:184] - Combined 3 files into a dataframe with 437 rows
+2025-09-28 17:28:01 +0530 [ERROR   ] [dashboard:calculate_greeks_proxy:288] - Error calculating Greeks proxy: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2025-09-28 17:30:50 +0530 [INFO    ] [database:init_db:170] - Database initialized successfully
+2025-09-28 17:30:50 +0530 [INFO    ] [risk_manager:__init__:70] - Risk Manager initialized
+2025-09-28 17:30:50 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 17:30:50 +0530 [INFO    ] [notification_interface:__init__:131] - Notification Manager initialized with systems: webhook, telegram
+2025-09-28 17:30:50 +0530 [INFO    ] [base:__init__:29] - AI Base initialized with features: set()

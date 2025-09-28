@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  options-wheel-bot:
+    build: .
+    container_name: options-wheel-bot
+    restart: unless-stopped
+    environment:
+      - DRY_RUN=true
+      - ENABLE_NOTIFICATIONS=false
+      # Add other environment variables as needed
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./historical_trades:/app/historical_trades
+      - ./results:/app/results
+    ports:
+      - "8501:8501"
+    networks:
+      - trading_network
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.path.append('.'); from health_check import run_comprehensive_health_check; result = run_comprehensive_health_check(); sys.exit(0 if result['status'] in ['healthy', 'warning'] else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  db:
+    image: postgres:13-alpine
+    container_name: trading-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: trading_db
+      POSTGRES_USER: trading_user
+      POSTGRES_PASSWORD: trading_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - trading_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U trading_user -d trading_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  trading_network:
+    driver: bridge
